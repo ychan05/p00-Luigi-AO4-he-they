@@ -1,0 +1,24 @@
+Luigi (he/they)
+Brian Wang
+Yat Long Chan
+SoftDev
+pd 8
+time spent: 
+---------------------
+AO4
+
+
+UNRESOLVED ISSUES
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-
+
+MID-DEVELOPMENT DESIGN CHANGES
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-
+
+2022-11-01
+--------------------------------------------------------------
+All: work on design doc
+Yat Long: create repo
+==============================================================
+
