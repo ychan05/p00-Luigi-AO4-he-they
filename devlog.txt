@@ -22,3 +22,10 @@ All: work on design doc
 Yat Long: create repo
 ==============================================================
 
+2022-11-02
+--------------------------------------------------------------
+All: Revise design doc:
+        - Added ship date
+        - Specified edit history and story content to be in the story table
+==============================================================
+
