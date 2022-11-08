@@ -2,8 +2,8 @@
 
 ## Roster
 ---
--  Yat Long Chan - Project Manager
-- Brian Wang - Developer
+-  Yat Long Chan - frontend + some backend
+- Brian Wang - backend + some frontend
 
 ## Description of app
 ---
