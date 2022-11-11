@@ -7,32 +7,44 @@ import csv       #facilitate CSV I/O
 
 DB_FILE="login.db"
 
-db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
-c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
-
 # create table if table DNE
-c.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='login';")
-if c.fetchone() == None:
-    c.execute("CREATE TABLE login('username' TEXT, 'password' TEXT)")
+def create_table(c):
+    c.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='login';")
+    if c.fetchone() == None:
+        c.execute("CREATE TABLE login('username' TEXT, 'password' TEXT)")
 
 # if username already registered return false. Add login to DB otherwise
 def signup(username, password):
-    c.execute("SELECT username FROM login where username = ?;", [username]) # 2nd param need to be sequences
-    if c.fetchone() == None:
+    db = sqlite3.connect(DB_FILE) 
+    c = db.cursor()               
+    create_table(c)
+    
+    # check if username is unique
+    c.execute("SELECT username FROM login where username = ?;", [username]) # 2nd param need to be a sequence
+    if not c.fetchone():
         c.execute("INSERT INTO login VALUES(?, ?)", (username, password))
+        db.commit() 
+        db.close()  
         return True
+
+    db.close()  
     return False
     
-
-
+# verify if user exists in db
 def verify (username, password):
+    db = sqlite3.connect(DB_FILE) 
+    c = db.cursor()               
+    create_table(c)
+
     c.execute("SELECT password FROM login where username = ?;", [username])
     tmp = c.fetchone()
-    if  tmp == None: # fetch all returns list of tuples
+    if not tmp: 
         return False
     elif tmp[0] == password:
+        db.close()  
         return True
+
+    db.close()  
     return False;
 
-db.commit() #save changes
-db.close()  #close database
+

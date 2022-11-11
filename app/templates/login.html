@@ -9,19 +9,23 @@
 
   <body>
     <h1>
-      Welcome, Travelers of the Intertoobz!
+      Welcome, login to continue!
     </h1>
 
     <p>{{status}}</p>
     <form method="POST" action="/auth">
-      <input type="text" name="username">
+      <input type="text" name="username" placeholder="username">
       <br>
-      <input type="text" name="password">
+      <input type="text" name="password" placeholder="password">
       <br>
       <input type="submit" name="sub1" value="login">
       <br>
     </form>
     <br>
+    <h3>Don't have an account?</h3>
+    <form action="/register">
+      <input type = "submit" name="sub1" value="sign up">
+    </form>
   </body>
 
 </html>

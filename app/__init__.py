@@ -3,22 +3,41 @@ from login_db import signup, verify
 
 app = Flask(__name__)
 
-# testing purposes
-user = 'frodo' 
-passwd = 'baggins'
-
 app.secret_key = "HI" # dummy key
 
 @app.route('/', methods=['GET'])
 def login():
   if 'username' in session:
-    return redirect('/home') # displ homepage if has cookies
+    return redirect('/home') # go to displ homepage if has cookies
   return render_template('login.html')
 
-@app.route('/auth', methods=['POST'])
+
+@app.route('/register', methods=['GET'])
+def register():
+  if 'username' in session:
+    return redirect('/home') # go to displ homepage if has cookies
+  return render_template('registration.html')
+
+# verify username not in use
+@app.route('/verify', methods=['GET', 'POST'])
+def make_account():
+  if request.method != 'POST':
+    return redirect('/')
+  
+  if not signup(request.form['username'], request.form['password']):
+    return render_template('registration.html', status='username in use')
+  
+  session['username'] = request.form['username']
+  return redirect('/home')
+
+# authenticate login
+@app.route('/auth', methods=['GET', 'POST'])
 def authenticate():
-  # will check if info is in db later on
-  if request.form['username'] != user and request.form['username'] != passwd: 
+  if request.method != 'POST':
+    return redirect('/')
+
+  # check if user in db
+  if not verify(request.form['username'], request.form['password']): 
     return render_template('login.html', status='Incorrect login info')
   
   session['username'] = request.form['username']
@@ -26,7 +45,11 @@ def authenticate():
 
 @app.route('/home', methods=['GET'])
 def home():
-  return render_template('homepage.html')
+  print(session['username'])
+  if not session:
+    return redirect('/')
+  return render_template('homepage.html', name=session['username'])
+
 
 @app.route('/logout')
 def logout():
