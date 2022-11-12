@@ -10,7 +10,7 @@ DB_FILE="login.db"
 # create table if table DNE
 def create_table(c):
     c.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='login';")
-    if c.fetchone() == None:
+    if not c.fetchone():
         c.execute("CREATE TABLE login('username' TEXT, 'password' TEXT)")
 
 # if username already registered return false. Add login to DB otherwise
