@@ -21,7 +21,7 @@ def signup(username, password):
     
     # check if username is unique
     c.execute("SELECT username FROM login where username = ?;", [username]) # 2nd param need to be a sequence
-    if not c.fetchone():
+    if not c.fetchone() and password:
         c.execute("INSERT INTO login VALUES(?, ?)", (username, password))
         db.commit() 
         db.close()  

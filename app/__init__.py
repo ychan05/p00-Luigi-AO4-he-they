@@ -25,6 +25,8 @@ def make_account():
     return redirect('/')
   
   if not signup(request.form['username'], request.form['password']):
+    if not request.form['password']:
+      return render_template('registration.html', status='enter a password')
     return render_template('registration.html', status='username in use')
   
   session['username'] = request.form['username']
