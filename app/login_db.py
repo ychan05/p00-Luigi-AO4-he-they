@@ -8,7 +8,7 @@ DB_FILE="login.db"
 def create_table(c):
     c.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='login';")
     if not c.fetchone():
-        c.execute("CREATE TABLE login('username' TEXT, 'password' TEXT)")
+        c.execute("CREATE TABLE login('username' TEXT, 'password' TEXT);")
 
 # if username already registered return false. Add login to DB otherwise
 def signup(username, password):
@@ -19,7 +19,7 @@ def signup(username, password):
     # check if username is unique
     c.execute("SELECT username FROM login where username = ?;", [username]) # 2nd param need to be a sequence
     if not c.fetchone() and password:
-        c.execute("INSERT INTO login VALUES(?, ?)", (username, password))
+        c.execute("INSERT INTO login VALUES(?, ?);", (username, password))
         db.commit() 
         db.close()  
         return True
