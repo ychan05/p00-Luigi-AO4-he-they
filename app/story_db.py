@@ -14,10 +14,23 @@ def create_story(title, text, user):
     db = sqlite3.connect(DB_FILE) 
     c = db.cursor()               
     create_table(c)
-    tmp = c.execute("SELECT COUNT(DISTINCT id) FROM stories;")
+    
+    c.execute("SELECT COUNT(DISTINCT id) FROM stories;")
     id = c.fetchone()[0] + 1# assign id by tally
     c.execute("INSERT INTO stories VALUES(?, ?, ?, ?, ?);", (id, title, text, text, user))
     db.commit() 
     db.close()  
 
-create_story('The Hobbit', 'In a hole in the ground there lived a hobbit.', 'TheR3alTolki3n')
+# edit story
+# prereq: story exist
+def edit_story(id, text, user):
+    db = sqlite3.connect(DB_FILE) 
+    c = db.cursor()               
+
+    c.execute("SELECT story FROM stories WHERE id = ? ORDER BY story DESC LIMIT 1;", str(id))
+    story = c.fetchone()[0] + ' ' + text 
+    title =  c.execute("SELECT title FROM stories WHERE id = ?;", str(id)).fetchone()[0]
+    c.execute("INSERT INTO stories VALUES(?, ?, ?, ?, ?);", (str(id), title, story, text, user))
+    db.commit() 
+    db.close()  
+
