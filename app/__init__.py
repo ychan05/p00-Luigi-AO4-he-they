@@ -1,5 +1,6 @@
 from flask import Flask, render_template, session, request, redirect
 from login_db import signup, verify
+from story_db import get_latest, get_titles, create_story, edit_story
 
 app = Flask(__name__)
 
@@ -47,10 +48,11 @@ def authenticate():
 
 @app.route('/home', methods=['GET'])
 def home():
-  print(session['username'])
   if not session:
     return redirect('/')
-  return render_template('homepage.html', name=session['username'])
+  titles = get_titles(session['username'])
+  stories = get_latest(session['username'])
+  return render_template('homepage.html', name=session['username'], len = len(titles), titles=titles, stories=stories)
 
 
 @app.route('/logout')

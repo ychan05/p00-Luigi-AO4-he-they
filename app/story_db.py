@@ -34,3 +34,27 @@ def edit_story(id, text, user):
     db.commit() 
     db.close()  
 
+# get ids of stories a user has contributed to
+def get_ids(user):
+    db = sqlite3.connect(DB_FILE) 
+    c = db.cursor()
+    return c.execute("SELECT id FROM stories WHERE contributor = ?", [user]).fetchall()
+    db.close()
+
+# get titles of stories a user has contributed to
+def get_titles(user):
+    db = sqlite3.connect(DB_FILE) 
+    c = db.cursor()
+    return c.execute("SELECT title FROM stories WHERE contributor = ?", [user]).fetchall()
+    db.close()
+
+# get latest ver. of stories user has contributed to 
+def get_latest(user):
+    db = sqlite3.connect(DB_FILE) 
+    c = db.cursor()
+    ids = get_ids(user)
+    stories = []
+    for i in range(0, len(ids)):
+        tmp = c.execute("SELECT story FROM stories WHERE id = ? ORDER BY story DESC LIMIT 1;", str(ids[i][0])).fetchone()[0]
+        stories.append(tmp)
+    return stories
