@@ -56,7 +56,19 @@ finished working on login database backend
 ==============================================================
 Brian Wang -- 2022-11-12 20:30
 --------------------------------------------------------------
-started working on story database backend 
 how to make variable table names? 
 "?" only works on fields in a table not the name
 change table workings to put all story into 1 table
+
+Yat Long -- 2022-11-12 23:00
+--------------------------------------------------------------
+opening a db cursor should be in a method to reduce opening multiple threads
+
+All -- 2022-11-12 23:00
+--------------------------------------------------------------
+worked on story database backend 
+==============================================================
+Brian Wang -- 2022-11-13 13:00
+--------------------------------------------------------------
+edited designdoc 
+SQLITE3 concat operator is ||
