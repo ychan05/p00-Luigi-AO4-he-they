@@ -46,3 +46,17 @@ Yat Long -- 2022-11-08 09:35
 designate roles
 begin working on frontend (flask + html)
 ==============================================================
+All -- 2022-11-10 14:00
+--------------------------------------------------------------
+begin working on login database backend
+==============================================================
+Yat Long -- 2022-11-11 18:00
+--------------------------------------------------------------
+finished working on login database backend
+==============================================================
+Brian Wang -- 2022-11-12 20:30
+--------------------------------------------------------------
+started working on story database backend 
+how to make variable table names? 
+"?" only works on fields in a table not the name
+change table workings to put all story into 1 table
