@@ -1,6 +1,6 @@
 from flask import Flask, render_template, session, request, redirect
 from login_db import signup, verify
-from story_db import get_latest, get_titles, create_story, edit_story
+from story_db import get_latest, get_titles, create_story, edit_story, get_story, get_ids
 
 app = Flask(__name__)
 
@@ -54,6 +54,38 @@ def home():
   stories = get_latest(session['username'])
   return render_template('homepage.html', name=session['username'], len = len(titles), titles=titles, stories=stories)
 
+@app.route('/view/<story_id>', methods=['GET'])
+def view(story_id):
+  story = get_story(story_id)[0]
+  id_list = []
+  for tupl in get_ids(session['username']):
+    id_list.append(tupl[0])
+  print(get_ids(session['username']))
+  print(story[0])
+  print(id_list)
+  if story[0] in id_list:
+    return render_template('story.html', name=story[1], user_id=story[4], content=story[2])
+  else:
+    return redirect('/edit/' + str(story_id))
+
+@app.route('/create', methods=['GET'])
+def create():
+  return render_template('create.html')
+
+@app.route('/make', methods=['GET', 'POST'])
+def make():
+  story_id = create_story(request.form['title'], request.form['content'], session['username'] )
+  return redirect('/view/' + str(story_id))
+
+@app.route('/edit/<story_id>', methods=['GET'])
+def edit(story_id):
+  story = get_story(story_id)[0]
+  return render_template('edit.html', name=story[1], user_id=story[4], content=story[3], story_id=story[0], story_path="/add/"+str(story[0]))
+
+@app.route('/add/<story_id>', methods=['GET', 'POST'])
+def add(story_id):
+  id = edit_story(story_id, request.form['content'], session['username'] )
+  return redirect('/view/' + str(id))
 
 @app.route('/logout')
 def logout():

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> {{name}} | Archive of of Our Own </title>
+    </head>
+
+    <body>
+        <h1>
+            {{name}}
+        </h1>
+        <h2>
+            Latest contribution by {{user_id}}
+        </h2>
+        <p>
+            {{content}}
+        </p>
+        <p>
+            <b>Add on!</b>
+            <form method="POST" action="{{story_path}}">
+                <input type="text" name="content" placeholder="content">
+                <br>
+                <input type="submit" name="sub1" value="add">
+                <br>
+              </form>
+        </p>
+        <form action="/">
+            <input type="submit" name="sub1" value="home" />
+        </form>
+    </body>
+</html>

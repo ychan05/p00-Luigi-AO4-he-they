@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 
 <html>
+  <head>
+    <title> Home | Archive of of Our Own</title>
+  </head>
   <h1>Hello {{name}}</h1>
   <form action="/logout">
     <input type="submit" name="sub1" value="logout" />
-    </form>
+  </form>
   <body>
     {%for i in range(0, len)%}
       <h3>{{titles[i][0]}}</h3>
       <p>{{stories[i]}}</p>
     {%endfor%}
   </body>
+  <form action="/create">
+    <input type="submit" name="sub1" value="create" />
+  </form>
 </html>

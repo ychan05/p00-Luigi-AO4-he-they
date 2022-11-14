@@ -20,6 +20,7 @@ def create_story(title, text, user):
     c.execute("INSERT INTO stories VALUES(?, ?, ?, ?, ?);", (id, title, text, text, user))
     db.commit() 
     db.close()  
+    return id
 
 # edit story
 # prereq: story exist
@@ -27,12 +28,13 @@ def edit_story(id, text, user):
     db = sqlite3.connect(DB_FILE) 
     c = db.cursor()               
 
-    c.execute("SELECT story FROM stories WHERE id = ? ORDER BY story DESC LIMIT 1;", str(id))
+    c.execute("SELECT story FROM stories WHERE id = ? ORDER BY story DESC LIMIT 1;", [str(id)])
     story = c.fetchone()[0] + ' ' + text 
-    title =  c.execute("SELECT title FROM stories WHERE id = ?;", str(id)).fetchone()[0]
+    title =  c.execute("SELECT title FROM stories WHERE id = ?;", [str(id)]).fetchone()[0]
     c.execute("INSERT INTO stories VALUES(?, ?, ?, ?, ?);", (str(id), title, story, text, user))
     db.commit() 
     db.close()  
+    return id
 
 # get ids of stories a user has contributed to
 def get_ids(user):
@@ -55,6 +57,16 @@ def get_latest(user):
     ids = get_ids(user)
     stories = []
     for i in range(0, len(ids)):
-        tmp = c.execute("SELECT story FROM stories WHERE id = ? ORDER BY story DESC LIMIT 1;", str(ids[i][0])).fetchone()[0]
+        tmp = c.execute("SELECT story FROM stories WHERE id = ? ORDER BY story DESC LIMIT 1;", [str(ids[i][0])]).fetchone()[0]
         stories.append(tmp)
     return stories
+
+# get all info associated with a story
+def get_story(id):
+    db = sqlite3.connect(DB_FILE) 
+    c = db.cursor()
+    c.execute("SELECT * FROM stories WHERE id = ? ORDER BY story DESC LIMIT 1;", [id])
+    temp = c.fetchall()
+    db.close()
+    return temp
+
