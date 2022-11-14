@@ -60,9 +60,6 @@ def view(story_id):
   id_list = []
   for tupl in get_ids(session['username']):
     id_list.append(tupl[0])
-  print(get_ids(session['username']))
-  print(story[0])
-  print(id_list)
   if story[0] in id_list:
     return render_template('story.html', name=story[1], user_id=story[4], content=story[2])
   else:

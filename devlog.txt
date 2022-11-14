@@ -72,3 +72,8 @@ Brian Wang -- 2022-11-13 13:00
 --------------------------------------------------------------
 edited designdoc 
 SQLITE3 concat operator is ||
+when inputting fields in SQLITE3, make sure to use [] to make multiple char inputs register as one inputs
+Finished frontend for story creation, viewing, editing
+removed debug prints
+put in many home buttons
+stop reading this ong
