@@ -62,6 +62,8 @@ change table workings to put all story into 1 table
 
 Yat Long -- 2022-11-12 23:00
 --------------------------------------------------------------
+add newly created story to db
+edit story and add to db
 opening a db cursor should be in a method to reduce opening multiple threads
 
 All -- 2022-11-12 23:00
@@ -76,4 +78,9 @@ when inputting fields in SQLITE3, make sure to use [] to make multiple char inpu
 Finished frontend for story creation, viewing, editing
 removed debug prints
 put in many home buttons
-stop reading this ong
+==============================================================
+Yat Long -- 2022-11-13 23:00
+--------------------------------------------------------------
+make browse page -- can look through all stories
+edit page reachable by ui
+change text fields to text areas

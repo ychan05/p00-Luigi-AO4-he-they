@@ -16,9 +16,9 @@
         </p>
         <p>
             <b>Add on!</b>
-            <form method="POST" action="{{story_path}}">
-                <input type="text" name="content" placeholder="content">
-                <br>
+            <br>
+            <textarea rows="10" cols="100" name="content" form="edit_story" placeholder="Enter text here..."></textarea>
+            <form method="POST" action="{{story_path}}" id="edit_story">
                 <input type="submit" name="sub1" value="add">
                 <br>
               </form>

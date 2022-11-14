@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+
+<html>
+  <body>
+    {%for i in range(0, len)%}
+      {%if ids[i][0] not in contributed[i]%}
+       <ul> <a href="/edit/{{ids[i][0]}}">{{titles[i]}}</a> </ul>
+      {%else%}
+       <ul> <a href="/view/{{ids[i][0]}}">{{titles[i]}}</a> </ul>
+      {%endif%}
+    {%endfor%}
+  </body>
+  <form action="/">
+    <input type="submit" name="sub1" value="home" />
+  </form>
+</html>

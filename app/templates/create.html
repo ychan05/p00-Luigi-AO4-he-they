@@ -9,14 +9,11 @@
             Create your own story!
         </h1>
         <p>
-            <form method="POST" action="/make">
+            <form method="POST" action="/make" id="make_story">
                 <input type="text" name="title" placeholder="title">
-                <br>
-                <input type="text" name="content" placeholder="content">
-                <br>
                 <input type="submit" name="sub1" value="create">
-                <br>
               </form>
+            <textarea rows="10" cols="100" name="content" form="make_story" placeholder="Enter text here..."></textarea>
         </p>
     </body>
     <form action="/">

@@ -1,6 +1,6 @@
 from flask import Flask, render_template, session, request, redirect
 from login_db import signup, verify
-from story_db import get_latest, get_titles, create_story, edit_story, get_story, get_ids
+from story_db import get_latest, get_titles, create_story, edit_story, get_story, get_ids, unique_ids, all_titles
 
 app = Flask(__name__)
 
@@ -46,6 +46,7 @@ def authenticate():
   session['username'] = request.form['username']
   return redirect('/home')
 
+# homepage. displays stories contributed to
 @app.route('/home', methods=['GET'])
 def home():
   if not session:
@@ -54,6 +55,7 @@ def home():
   stories = get_latest(session['username'])
   return render_template('homepage.html', name=session['username'], len = len(titles), titles=titles, stories=stories)
 
+# view a story
 @app.route('/view/<story_id>', methods=['GET'])
 def view(story_id):
   story = get_story(story_id)[0]
@@ -65,25 +67,39 @@ def view(story_id):
   else:
     return redirect('/edit/' + str(story_id))
 
+# html page for making new story
 @app.route('/create', methods=['GET'])
 def create():
   return render_template('create.html')
 
+# add new story to db
 @app.route('/make', methods=['GET', 'POST'])
 def make():
+  if not request.form['title'] or request.form['content']:
+    return redirect('/create')
   story_id = create_story(request.form['title'], request.form['content'], session['username'] )
   return redirect('/view/' + str(story_id))
 
+# html page for editing story
 @app.route('/edit/<story_id>', methods=['GET'])
 def edit(story_id):
   story = get_story(story_id)[0]
   return render_template('edit.html', name=story[1], user_id=story[4], content=story[3], story_id=story[0], story_path="/add/"+str(story[0]))
 
+# add edited story to db
 @app.route('/add/<story_id>', methods=['GET', 'POST'])
 def add(story_id):
+  if not request.form['content']:
+    return redirect('/edit/' + str(story_id))
   id = edit_story(story_id, request.form['content'], session['username'] )
-  return redirect('/view/' + str(id))
+  return redirect('/view/' + str(story_id))
 
+# browse all stories  
+@app.route('/browse', methods=['GET'])
+def browse():
+  ids = unique_ids()
+  return render_template('browse.html', contributed=get_ids(session['username']), len=len(ids),ids=ids, titles=all_titles())
+# logout
 @app.route('/logout')
 def logout():
   session.pop('username')

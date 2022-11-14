@@ -34,7 +34,6 @@ def edit_story(id, text, user):
     c.execute("INSERT INTO stories VALUES(?, ?, ?, ?, ?);", (str(id), title, story, text, user))
     db.commit() 
     db.close()  
-    return id
 
 # get ids of stories a user has contributed to
 def get_ids(user):
@@ -70,3 +69,20 @@ def get_story(id):
     db.close()
     return temp
 
+# get ids of all stories
+def unique_ids():
+    db = sqlite3.connect(DB_FILE) 
+    c = db.cursor()
+    c.execute("SELECT DISTINCT id FROM stories;")
+    return c.fetchall()
+
+def all_titles():
+    db = sqlite3.connect(DB_FILE) 
+    c = db.cursor()
+    ids = unique_ids()
+    titles = []
+    for i in range(0, len(ids)):
+        tmp = c.execute("SELECT DISTINCT title FROM stories WHERE id = ?", [str(ids[i][0])]).fetchone()[0]
+        titles.append(tmp)
+    db.close()
+    return titles
