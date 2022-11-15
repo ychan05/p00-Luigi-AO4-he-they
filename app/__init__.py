@@ -83,6 +83,9 @@ def make():
 # html page for editing story
 @app.route('/edit/<story_id>', methods=['GET'])
 def edit(story_id):
+  for i in get_ids(session['username']):
+    if int(story_id) in i:
+      return redirect('/view/' + str(story_id))
   story = get_story(story_id)[0]
   return render_template('edit.html', name=story[1], user_id=story[4], content=story[3], story_id=story[0], story_path="/add/"+str(story[0]))
 
