@@ -75,7 +75,7 @@ def create():
 # add new story to db
 @app.route('/make', methods=['GET', 'POST'])
 def make():
-  if not request.form['title'] or request.form['content']:
+  if not (request.form['title'] and request.form['content']):
     return redirect('/create')
   story_id = create_story(request.form['title'], request.form['content'], session['username'] )
   return redirect('/view/' + str(story_id))
